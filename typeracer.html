@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport", content="width=device-width, initial-sclae=1.0">
+    <title>typeracer</title>
+    
+<style>    
+html{
+height: 100%;
+background: radial-gradient(circle, violet,indigo,blue,green,yellow,orange,red);
+/*background: -webkit-radial-gradient(circle, #fff,*/
+/*#ccc);*/
+/*background: -o-radial-gradient(circle, #fff, #ccc);*/
+/*background: -moz-radial-gradient(circle, #fff, #ccc);*/
+}
+#container{
+height: 450px;
+width: 600px;
+/*background:radial-gradient(circle,#9DD2EA,aliceblue);*/
+background-color:#9DD2EA;
+margin: 60px auto;
+padding: 20px;
+border-radius: 30px;
+box-shadow: 0px 4px 0px 0px #009de4;
+/*-moz-box-shadow: 0px 4px 0px 0px #009de4;*/
+/*-webkit-box-shadow: 0px 4px 0px 0px #009de4;*/
+/* box-shadow: [horizontal offset] [vertical
+offset] [blur radius] [optional spread radius] [color]*/
+position: relative;
+}    
+    
+    #displaytext{
+        
+        position: absolute;
+        width: 470px;
+        height: auto;;
+        top: 75px;
+        left:12.5%;
+        border-radius: 20px;
+/*        background-color: aliceblue;*/
+        background:radial-gradient(circle,#9DD2EA,aliceblue);
+        border:2px solid blue;
+        text-align: center;
+        padding: 10px;
+        font-size:1.5em;
+    }    
+    #timer{
+        position: absolute;
+        width: auto;
+        height:auto;
+        top: 15px;
+        left: 513px;
+        background-color: red;
+        padding: 4px;
+        border-radius: 10px;
+        border: 3px yellow solid;
+        color: yellow;
+        
+    }
+    #inputtext{
+        
+        border: 1px solid black;
+         position: absolute;
+        top: 400px;
+        left: 16.5%
+    }
+    
+    #startreset{
+        
+        width: 110px;
+        height: auto;
+        position: absolute;
+        top: 450px;
+        left: 275px;
+        text-align: center;
+        padding: 4px;
+        color: red;
+        font-size: 1.2em;
+        background-color: aliceblue;
+        border-radius: 12px;
+        border: 2px solid yellow;
+    }
+    #score{
+        
+        width: 400px;
+        height: 180px;
+        position: absolute;
+        left: 117px;
+        top: 100px;
+        text-align: center;
+        padding: 5px;
+        border: 3px solid yellow;
+        border-radius: 40px;
+        background-color:#292A2A;
+        color: #E0A80D;
+        display: none;
+        font-size: 3.4em;
+    }
+    #wrong{
+        
+        width: 150px;
+        height:auto;
+        background-color: red;
+        color: white;
+        font-size:2em;
+        padding: 4px;
+        text-align: center;
+        position: absolute;
+        border-radius: 30px;
+        border: 4px solid green;
+        display: none;
+        
+    }
+    #time
+    {
+        font-size: 1.4em;
+        
+    }
+    #cover{
+        width:500px;
+        height: 50px;
+        position: absolute;
+        background-color:#9DD2EA;
+/*        background:radial-gradient(circle,#9DD2EA,aliceblue);*/
+        color: red;
+        font-size: 2em;
+        text-align: center;
+        padding: auto;
+        top: 385px;
+        left: 72px;
+        display: block;
+        
+    }
+    
+    
+    </style>    
+    
+    
+</head>
+<body>
+<div id="container">
+    
+<div id="displaytext">
+</div>    
+<!--    end of display text-->
+<div id="timer">
+    <center >Time Elapsed:<br> <span id="time">0 sec</span> </center>    
+</div>
+<!--    end of timer-->
+    <div id="inputtext">
+    
+    <input type="text" name="inputtxt" id="inputtxt" placeholder="Type your text here" size="60px" oninput="myFunction(event)">
+    
+    </div>
+<!--    end of inputtext-->
+    <div ><button type="button" id="startreset"></button>
+    </div>
+<!--    end of startreset-->
+    <div id="score">
+    
+    </div>
+    <div id="wrong"> 
+        WRONG
+    </div>
+    <div id="cover">Get ready! Click start</div>
+    
+</div>    
+    
+<!--    end of container-->
+
+   <script>
+       
+       
+       var str1="In publishing and graphic design, lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document without relying on meaningful content (also called greeking). Replacing the actual content with placeholder text allows designers to design the form of the content before the content itself has been produced."
+//       var str1="abcd efgh.";
+       var str2="Lines of weeds criss-crossed the cracked parking lot of the Seashell Motor Courts. The flaking paint on the buildings had chalked to a pastel pink on walls covered with graffiti. Many of the windows had been smashed out. Where the sign had been, atop rusting steel posts, only the metal outline of a seashell remained."
+       var str3="An hour and a few lines had passed, the wind picked up. I noticed the roll of dark clouds ahead and decided to pack up before I get caught in what looked like a heavy downpour. As I grabbed my guitar, I spotted a man, sitting a few meters away from me. I could have ignored him, but the smile on his face while his eyes were closed felt creepy."
+       var str4="I was about 50 yards or so up this path when I noticed a man standing off the side of the path apparently staring into the woods. As I got closer I realized his pants were down around his ankles and I could see his ass. Now, I'm straight but I have to say that it was a really nicely shaped ass for a man and I took notice. ."
+       var str5="Hey, It's Michael. Remember me? Dont blame you if you don't, you were ****ed up lol. Well I just wanna thank you for a fun night, I'll never forget when we went into the forest and broke threw rocks at bird nests, an then sticking the chicks corpses into out asses? Good times lol. Well, if you're ever down to hang out again, just call me."
+       var str6="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+       var e=Math.floor(Math.random()*5)+1;
+       var a1=[str1,str2,str3,str4,str5,str6];
+       var str=a1[e];
+       var arr=[];
+       var a=[];
+       a=str.split(' ');
+       arr=str.split('');
+       var l=arr.length;
+       var i;
+       var l1=a.length;
+//       window.alert(l1);
+       
+       
+       for(i=0;i<l;i++){
+       var para = document.createElement("span");
+       var node = document.createTextNode(arr[i]);
+       para.appendChild(node);
+       var element = document.getElementById("displaytext");
+       element.appendChild(para);
+        }
+       
+       
+       var play=false;
+       var start="Start"
+       var timerr=-1;
+       document.getElementById("startreset").innerHTML=start;
+       document.getElementById("time").innerHTML=timerr +" sec";
+       var z;   
+       var m=0;
+       var n=0;
+    
+    function startCountdown(){
+action = setInterval(function(){
+timerr += 1;
+document.getElementById("time").innerHTML=timerr +" sec" ;
+document.getElementById("score").innerHTML= " Typing speed <br>"+Math.round(l1/(timerr/60))+"<br> WPM";
+if(timerr>59)
+    {
+      document.getElementById("time").innerHTML=Math.floor((timerr/60))+" : "+(timerr%60) +" min";  
+    }
+},1000);}
+       
+   document.getElementById("startreset").onclick =
+function(){    
+       if(!play)
+           {
+               play=true;
+   startCountdown();
+    document.getElementById("cover").style.display="none";   
+    document.getElementById("startreset").innerHTML="Reset"; 
+      }
+       
+       else{
+            location.reload();
+            document.getElementById("cover").style.display="none";   
+            document.getElementById("startreset").innerHTML="Start";  
+            clearInterval(action);
+            timerr=-1;
+           
+           
+       }
+   }
+                
+               
+               
+               
+               
+// this function is important   
+   function myFunction(event) 
+    {
+    var v=event.data;
+     z = document.getElementById("inputtxt").value;
+    var len= z.length;
+    makeitwhite(len);
+
+       if(v==arr[len-1])
+       {  correct(len-1);    
+       }
+       
+        else if(z.charAt(len-1)==arr[len-1])
+          {
+              correct(len-1);
+          }
+        
+        else
+           {
+               incorrect(len-1);
+
+
+           }
+        check(len);
+    
+        if(n!=0)
+            show("wrong");
+        else
+            hidden("wrong");
+//       window.alert(m);
+//        window.alert(n);
+        if(m==l&&n==0)
+            {
+                show("score");
+                clearInterval(action);
+            }
+        
+     } 
+   
+    function correct(j)
+       {   
+           if(j<l)
+               {
+                var x = document.getElementById("displaytext");
+                var y = x.getElementsByTagName("span");
+                y[j].style.backgroundColor="#3CD80D";
+               }
+
+       }
+        function incorrect(j)
+       {       
+           if(j<l)   
+           {  var x = document.getElementById("displaytext");
+                var y = x.getElementsByTagName("span");
+                y[j].style.backgroundColor="#FC3730";}
+
+       }
+        function makeitwhite(j)
+       {
+           var i;
+           for(i=j;i<l;i++)
+               {
+                var x = document.getElementById("displaytext");
+                var y = x.getElementsByTagName("span");
+                y[i].style.backgroundColor="aliceblue";       
+               }
+           
+       }
+       
+       document.getElementById("score").innerHTML="Time "+timerr+ " speed "+Math.round(l1/(timerr/60))+" WPM";
+       
+       
+       function show(id)
+       {
+           
+           document.getElementById(id).style.display="block";
+           
+       }
+       function hidden(id)
+       {
+           
+           document.getElementById(id).style.display="none";
+           
+       }
+       
+       function check(q)
+       {
+           var i;
+        m=0;
+        n=0;
+        for(i=0;i<q;i++)   
+            {
+         if(z.charAt(i)==arr[i])
+                {  m++;}
+                else
+                {    n++;}
+                
+       }
+       
+            }
+       
+       
+   </script>     
+    
+</body>
+
+</html>
