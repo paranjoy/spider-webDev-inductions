@@ -24,7 +24,7 @@ canvas {
 <body onload="startGame()">
     
     <div><br></div>
-        <div id="a">      
+        <div id="a" >      
         <center>
         ANGLE: &nbsp;<input type="text" id="angle" placeholder="angle(degrees)" value="" style="width: 150px; text-align: center;height: 20px;">
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
@@ -36,11 +36,16 @@ canvas {
         </center>
     </div>
     
-    
+    <div id="k" style="display: none">
+        <center>
+    <button id="restart" style="font-size: 3em; color: dodgerblue; background: black; border: 4px solid blue;" onClick="document.location.reload()">&nbsp;&nbsp;&nbsp; RESTART&nbsp;&nbsp;&nbsp; </button>
+        </center>
+    </div>
     
     
     
 <script>
+    
 var e =Math.floor(120*Math.random()) + 200;
 var r= 222*222/(450-e);  
 var q;
@@ -48,17 +53,79 @@ var w;
 var power=0;
 var angle=0;
 var myGameUpdate=[];
-var myGamePiece = new component(10, 10, "yellow", 300, 420);
-var i=0;   
+var i=0;
+var z=1;
 var x=944;    
+var x1=350 - Math.floor(250*Math.random());
+var y1=395;
+var x2=880 + Math.floor(270*Math.random());
+var y2=395;
+var myGamePiece = new component(0, 0, "yellow", 00, 0);
+var mySound = new sound("gun.mp3");
+var yes = new sound("yes.wav");
+var score1 = new score("30px",10,50);
+var score2 = new score("30px",10,100);
+var s1=0;
+var s2=0;
+score1.text="payler left score  "+s1;
+score2.text="player right score "+s2;
+var time =new score("20px",1000,60);
+var t_u=181;
+function count(){
+ action = setInterval(function(){
+     time.text="";
+     var tm=Math.floor(t_u/60);
+     var ts=t_u%60;
+     time.text="TIME LEFT: "+tm+" : "+ts;
+      myGameArea.clear();
+      tank1();
+      tank2();
+      score1.update();
+      score2.update();
+      mountain();
+      time.update();
+      t_u--;
+     if(t_u==0)
+    {
+         clearInterval(action);
+         clearInterval(myGameArea.interval);
+         document.getElementById("a").style.display="none";
+         document.getElementById("k").style.display="block";
+        if(s1>s2)
+            {
+                var win = new score("50px",410,200);
+                win.text="PLAYER LEFT WINS";
+                myGameArea.clear();
+                win.update();
+            }
+        else if(s2>s1)
+            {
+                var win = new score("50px",410,200);
+                win.text="PLAYER RIGHT WINS";
+                myGameArea.clear();
+                win.update();   
+            }
+        else{
+               var win = new score("50px",500,200);
+                win.text="IT'S A DRAW";
+                myGameArea.clear();
+                win.update();
+        }
+        
+    }
+ },1000);};   
 document.getElementById("fire").onclick= function(){ 
     if(x==300)
     {x=944;
-        myGamePiece= new component(10, 10, "red", x, 420);
+        mySound.stop();
+        myGamePiece= new component(-10, 10, "red", x2, y2);
+        mySound.play();
     }
     else
     {x=300;
-         myGamePiece= new component(10, 10, "yellow", x, 420);
+         mySound.stop();
+         myGamePiece= new component(10, 10, "yellow", x1, y1);
+         mySound.play();
     } 
     myGameArea.start(i); 
     i++;
@@ -67,7 +134,6 @@ document.getElementById("fire").onclick= function(){
 function startGame() {
     myGameArea.start(0);clearInterval(myGameArea.interval);
 };
-var z=1;
 var myGameArea = {
     canvas: document.createElement("canvas"),
     start : function(c) {
@@ -83,6 +149,32 @@ var myGameArea = {
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }   
+}
+function tank1(){
+    ctx = myGameArea.context;
+    ctx.fillStyle = "yellow";
+    ctx.strokeStyle="red";
+    ctx.fillRect(x1, y1,-80 , 50);
+    ctx.strokeRect(x1,y1,-80,50);    
+}
+function tank2(){
+    ctx = myGameArea.context;
+    ctx.fillStyle = "red";
+    ctx.strokeStyle="yellow";
+    ctx.fillRect(x2, y2,80 , 50);
+    ctx.strokeRect(x2,y2,80,50);    
+}    
+function score(a,b,c){
+//    var score1 = new score("30px",10,50);
+//     var score2 = new score("30px",10,100);
+    this.x=b;
+    this.y=c;
+    this.update = function() { 
+    ctx= myGameArea.context;
+    ctx.font=a +"  Consolas";
+    ctx.fillStyle="blue";
+    ctx.fillText(this.text,this.x,this.y);
+}
 }
 function component(width, height, color, x, y) {
     this.width = width;
@@ -114,12 +206,76 @@ function component(width, height, color, x, y) {
             {
                 clearInterval(myGameArea.interval);
                 document.getElementById("a").style.display="block";
+                if(z==1){s1 -= 2;}
+                else{s2 -= 2;}
+                        score2.text="player right score "+s2;
+                        score1.text="player left score "+s1;
+                         myGameArea.clear();
+                        tank1();
+                        tank2();
+                        score1.update();
+                        score2.update();
+                        mountain();
+                        time.update();
+//                document.getElementById("power").value="";
+//                document.getElementById("angle").value="";
             }
         if((q-622)*(q-622)-r*(w-e) <=0 || (q-622)*(q-622)-r*(w-e+10) <=0 || (q-612)*(q-612)-r*(w-e+10) <=-1 )
                     {
+                        if(z==1){s1 -= 10;}
+                         else{s2 -=10;}
+                        score2.text="player right score "+s2;
+                        score1.text="player left score "+s1;
                         clearInterval(myGameArea.interval);
                         document.getElementById("a").style.display="block"; 
-                    }      
+                        myGameArea.clear();
+                        tank1();
+                        tank2();
+                        score1.update();
+                        score2.update();
+                        mountain();
+                        time.update();
+//                        document.getElementById("power").value="";
+//                        document.getElementById("angle").value="";
+                    }     
+        if(q>=x1-80 && q<=x1-2){
+                if(w>=y1){
+                        clearInterval(myGameArea.interval);
+                        document.getElementById("a").style.display="block"; 
+//                        document.getElementById("power").value="";
+//                        document.getElementById("angle").value="";
+                       x1=x1-(power*0.15);
+                       s2 +=100;
+                       score2.text="player right score "+s2;
+                       yes.play();
+                       myGameArea.clear();
+                       tank1();
+                       tank2();
+                       score1.update();
+                       score2.update();
+                       mountain();
+                       time.update();
+                }
+            }
+        if(q>=x2+2 && q<=x2+80){
+                if(w>=y2){
+                        clearInterval(myGameArea.interval);
+                        document.getElementById("a").style.display="block"; 
+//                        document.getElementById("power").value="";
+//                        document.getElementById("angle").value="";
+                    yes.play();
+                    x2=x2+(power*0.15);
+                    s1 +=100;
+                    score1.text="player left score "+s1;
+                    myGameArea.clear();
+                    score1.update();
+                    score2.update();
+                    tank1();
+                    tank2();
+                    mountain();
+                    time.update();
+                }
+            }
     };
 }
     function mountain() {
@@ -141,11 +297,31 @@ function component(width, height, color, x, y) {
         ctx.fill();
         
     }
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    }
+    this.stop = function(){
+        this.sound.load();
+    }    
+}
 function updateGameArea(b,l) {
     myGameArea.clear();
     mountain();
-    myGamePiece.update();  
+    tank1();
+    tank2();
+    score1.update();
+    score2.update();
+    myGamePiece.update();
+    time.update();
 }
+count();
 </script>
 </body>
 </html>
