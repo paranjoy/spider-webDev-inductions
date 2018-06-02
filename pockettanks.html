@@ -5,110 +5,147 @@
 <style>
 canvas {
     border:10px solid #666;
-    background: linear-gradient(aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,white,green);
+    background: linear-gradient(white,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,white,green,#775842);
 }
+
+    #fire{
+        border: 4px solid red;
+        background-color: yellow;
+        width: 85px;
+        height: 85px;
+        border-radius: 50%;
+        color: red;
+        font-size: 1.3em;
+        font-weight: bolder;
+    }
+    
 </style>
 </head>
 <body onload="startGame()">
+    
+    <div><br></div>
+        <div id="a">      
+        <center>
+        ANGLE: &nbsp;<input type="text" id="angle" placeholder="angle(degrees)" value="" style="width: 150px; text-align: center;height: 20px;">
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        POWER: &nbsp;<input type="text" id="power" placeholder="power(initial speed m/s)" value="" style="width: 150px; text-align: center;height: 20px;">
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp;
+        <button id="fire"> F I R E </button>
+            <br>
+        <strong style="color: red;">Tip:</strong> Choose your Power and Angle wisely and then FIRE     
+        </center>
+    </div>
+    
+    
+    
+    
+    
 <script>
-
-var myGamePiece;
-
+var e =Math.floor(120*Math.random()) + 200;
+var r= 222*222/(450-e);  
+var q;
+var w;    
+var power=0;
+var angle=0;
+var myGameUpdate=[];
+var myGamePiece = new component(10, 10, "yellow", 300, 420);
+var i=0;   
+var x=944;    
+document.getElementById("fire").onclick= function(){ 
+    if(x==300)
+    {x=944;
+        myGamePiece= new component(10, 10, "red", x, 420);
+    }
+    else
+    {x=300;
+         myGamePiece= new component(10, 10, "yellow", x, 420);
+    } 
+    myGameArea.start(i); 
+    i++;
+    document.getElementById("a").style.display="none";
+};
 function startGame() {
-    myGamePiece = new component(7, 7, "yellow", 10, 290);
-    myGameArea.start();
-}
-
+    myGameArea.start(0);clearInterval(myGameArea.interval);
+};
+var z=1;
 var myGameArea = {
     canvas: document.createElement("canvas"),
-    start : function() {
-        this.canvas.width = 880;
-        this.canvas.height =310;
+    start : function(c) {
+        this.canvas.width = 1244;
+        this.canvas.height =450;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        myGameUpdate[c] = new updateGameArea(c);
+        z=z*(-1);
+        this.interval = setInterval(function(){
+         updateGameArea(c, z)}, 20);
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    }
+    }   
 }
-
 function component(width, height, color, x, y) {
     this.width = width;
     this.height = height;
+    this.time=0;
     this.speedX = 0;
     this.speedY = 0;
     this.x=x;
-    this.y = y;    
+    this.y = y;  
     this.update = function() {
+        power=document.getElementById("power").value;
+        angle=document.getElementById("angle").value;
+        var vs=(Math.sin((Math.PI/180)*angle))*power;
+        var vc=(Math.cos((Math.PI/180)*angle))*power;
+        this.time += 0.12;
+        var t=this.time;
+        this.x  = x+ vc*t*z; 
+        this.y = y-(vs*t-5*t*t);
+        q=this.x;
+        w=this.y; 
         ctx = myGameArea.context;
         ctx.fillStyle = color;
+        if(color=="red"){ctx.strokeStyle="yellow";}
+        else{ctx.strokeStyle="red";}
+        
         ctx.fillRect(this.x, this.y, this.width, this.height);
-    }
-    this.newPos = function() {
-        this.speedX + = 2;
-        this.x  = x+ this.speedX;
-        this.speedY + = 02; 
-        this.y = y-(250*(this.speedY)-50*(this.speedY)*(this.speedY)); 
-    }
-    this.mountain= function() {
-         ctx = myGameArea.context;   
-var my_gradient=ctx.createLinearGradient(0,00,0,320);
-my_gradient.addColorStop(0.2,"lightblue");        
-my_gradient.addColorStop(0.55,"#775842");  
-my_gradient.addColorStop(0.89,"#775842");  
-my_gradient.addColorStop(1,"green");//#984C01
-ctx.fillStyle=my_gradient;
-ctx.beginPath();
-ctx.moveTo(200, 310);
-ctx.quadraticCurveTo(400, -90, 680, 310);
-ctx.fill();
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        if(this.y > 450)
+            {
+                clearInterval(myGameArea.interval);
+                document.getElementById("a").style.display="block";
+            }
+        if((q-622)*(q-622)-r*(w-e) <=0 || (q-622)*(q-622)-r*(w-e+10) <=0 || (q-612)*(q-612)-r*(w-e+10) <=-1 )
+                    {
+                        clearInterval(myGameArea.interval);
+                        document.getElementById("a").style.display="block"; 
+                    }      
+    };
+}
+    function mountain() {
+        ctx = myGameArea.context;   
+        var my_gradient=ctx.createLinearGradient(0,90,0,460);
+        my_gradient.addColorStop(0.2,"lightblue");        
+        my_gradient.addColorStop(0.55,"#775842");  
+        my_gradient.addColorStop(0.95,"#775842");  
+        my_gradient.addColorStop(0.97,"#735A40");//#984C01
+        ctx.fillStyle=my_gradient;
+        ctx.beginPath();
+        ctx.moveTo(400, 450);
+        for(i=400;i<844;i=i+0.0888)
+            {
+                var j=((i-622)*(i-622)/(r)) + e;
+                ctx.lineTo(i,j);
+                
+            }
+        ctx.fill();
         
     }
-}
-
-function updateGameArea() {
-    
+function updateGameArea(b,l) {
     myGameArea.clear();
-    myGamePiece.mountain();
-    myGamePiece.newPos();    
-    myGamePiece.update();
-    
-    
+    mountain();
+    myGamePiece.update();  
 }
-
-//function moveup() {
-//    myGamePiece.speedY = -1; 
-//}
-//
-//function movedown() {
-//    myGamePiece.speedY = 1; 
-//}
-//
-//function moveleft() {
-//    myGamePiece.speedX = -1; 
-//}
-//
-//function moveright() {
-//    myGamePiece.speedX = 1; 
-//}
-//
-//function clearmove() {
-//    myGamePiece.speedX = 0.1; 
-//    myGamePiece.speedY = 0.1; 
-//}
 </script>
-<!--
-<div style="text-align:left;width:480px;">
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-</div>
-
-If you click a button the red square will start moving. The movement will stop when you stop pressing th button
-<p>We have added the ontouchstart event on the buttons, to make this example work for touch devices.</p>
--->
 </body>
 </html>
