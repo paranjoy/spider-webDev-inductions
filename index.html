@@ -7,7 +7,6 @@ canvas {
     border:10px solid #666;
     background: linear-gradient(white,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,aliceblue,white,green,#775842);
 }
-
     #fire{
         border: 4px solid red;
         background-color: yellow;
@@ -124,6 +123,7 @@ function count(){
  },1000);};   
 document.getElementById("fire").onclick= function(){ 
     power=document.getElementById("power").value;
+    angle=document.getElementById("angle").value;
     if(power>=120){power=120;}
     if(x==300)
     {x=944;
@@ -201,10 +201,14 @@ function component(width, height, color, x, y) {
     this.x=x;
     this.y = y;  
     this.update = function() {
-        if(document.getElementById("power").value >=120)
-            {document.getElementById("power").value=120;}
-        power=document.getElementById("power").value;
+//        if(document.getElementById("power").value >=120)
+//            {document.getElementById("power").value=120;}
+//        power=document.getElementById("power").value;
         angle=document.getElementById("angle").value;
+        if(angle==0)
+            {
+                angle=1;
+            }
         var vs=(Math.sin((Math.PI/180)*angle))*power;
         var vc=(Math.cos((Math.PI/180)*angle))*power;
         this.time += 0.12;
@@ -235,10 +239,8 @@ function component(width, height, color, x, y) {
                         score2.update();
                         mountain();
                         time.update();
-//                document.getElementById("power").value="";
-//                document.getElementById("angle").value="";
             }
-        if((q-622)*(q-622)-r*(w-e) <=0 || (q-622)*(q-622)-r*(w-e+10) <=0 || (q-612)*(q-612)-r*(w-e+10) <=-1 )
+        else if((q-622)*(q-622)-r*(w-e) <=0 || (q-622)*(q-622)-r*(w-e+10) <=0 || (q-612)*(q-612)-r*(w-e+10) <=-1 )
                     {
                         if(z==1){s1 -= 10;}
                          else{s2 -=10;}
@@ -253,15 +255,11 @@ function component(width, height, color, x, y) {
                         score2.update();
                         mountain();
                         time.update();
-//                        document.getElementById("power").value="";
-//                        document.getElementById("angle").value="";
                     }     
-        if(q>=x1-80 && q<=x1-2){
-                if(w>=y1){
+        else if(this.x>=x1-80 && this.x<=x1-2){
+                if(this.y>=y1 && z==-1){
                         clearInterval(myGameArea.interval);
                         document.getElementById("fire").style.visibility="visible"; 
-//                        document.getElementById("power").value="";
-//                        document.getElementById("angle").value="";
                        x1=x1-(power*0.15);
                        s2 +=100;
                        score2.text="player right score "+s2;
@@ -275,12 +273,10 @@ function component(width, height, color, x, y) {
                        time.update();
                 }
             }
-        if(q>=x2+2 && q<=x2+80){
-                if(w>=y2){
+        else if(this.x>=x2+2 && this.x<=x2+80){
+                if(this.y>=y2 && z==1){
                         clearInterval(myGameArea.interval);
                         document.getElementById("fire").style.visibility="visible"; 
-//                        document.getElementById("power").value="";
-//                        document.getElementById("angle").value="";
                     yes.play();
                     x2=x2+(power*0.15);
                     s1 +=100;
