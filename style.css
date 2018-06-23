@@ -1,0 +1,270 @@
+body{
+    background: url("img1.jpg") no-repeat center center; 
+    background-attachment: fixed;  
+}
+
+#acc-info{
+    margin: 0;
+    position: absolute;
+    top: 5%;
+    height: 60%;
+    width: 20%;
+    background-color: rgba(0,102,135,0.8);
+}
+
+#acc-logout{
+    position: absolute;
+    bottom: 2%;
+    left: 26.9%;
+    background-color: rgba(0,0,255,0.3);
+    color: yellow;
+    font-size: 1.1em;
+    border: 0;
+    height: 40px;
+    border-radius: 20%;
+}
+
+#choice{
+    margin: 0;
+    position: absolute;
+    top: 3%;
+    left: 30%; 
+}
+
+.choice{
+    width: 300px;
+    height: 40px;
+    background-color: rgba(0,102,135,0.8);
+    font-size: 1.5em;
+    border: 0px;
+    color:yellow;
+}
+
+ #show-todo{    
+    position: absolute;
+    width: 65%;
+    min-height: 100px;
+    top: 15%;
+    left: 25%;
+    border: 0px;
+    background-color: rgba(0,102,135,0.4);
+    padding: 10px;
+    display: none; 
+}
+#show-notes{
+    position: absolute;
+    width: 65%;
+    min-height: 100px;
+    top: 15%;
+    left: 25%;
+    border: 0px;
+    background-color: rgba(0,102,135,0.4); 
+    padding: 10px; 
+    display: none; 
+}
+#signup{
+    background-color: rgba(0,102,135,0.8); 
+    position: absolute;
+    width: 350px;
+    height:auto;
+    top: 12%;
+    left: 37%;
+}
+
+.error{
+    color: red;
+}
+.n{
+    
+    background-color: #E7E7E8;
+    width: 97%;
+    height: auto;
+/*    min-height: 40px;*/
+    padding-left: 5px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-bottom: 8px;
+/*    position: relative;*/
+}
+.de{
+    background-color: orangered;
+    color: white;
+    font-size: 1.2em;
+    float: right;
+    margin: 4px;
+    border: 2px solid black;
+}
+.de:hover {
+    background-color: #bbb;
+    color: orangered;
+}
+
+.ed{
+    background-color:green;
+    color: white;
+    font-size: 1.2em;
+    float: right;
+    margin: 4px;
+    border: 2px solid black;
+}
+
+.ed:hover {
+    background-color:#bbb;
+    color: green;
+    
+}
+.ipn{
+    width: 76%;
+    height: 27px;
+    background-color: #E7E7E8 ;
+    color: black;
+    float: left;
+    margin-bottom: 6px;
+    margin-top: 3px;
+    padding: 3px;
+    font-size: 1.3em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.time1{
+    color: black;
+    font-size: 0.86em;
+    padding: 3px 4px;
+    margin-left: 10px;
+    margin-bottom: 2px;
+}
+
+ textarea{
+            width: 100%;
+            max-width: 100%;
+            font-size: 16px;
+            line-height: 1.5em;
+            border-left-width: 20px;
+            border-color: #144DAE;
+            color: black;
+            background-color: #E7E7E8;
+            padding: 10px;
+              
+        }
+
+#addnotes{ 
+  margin-top: 4px;   
+  margin-bottom: 4px;    
+  padding: 10px;
+  width: 22.5%;
+  background: dimgray;
+  color: white;
+  text-align: center;
+  font-size: 1.7em;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+  border: 2px solid black;     
+}
+#addnotes:hover {
+  background-color: #bbb;
+  color: dimgray;
+}
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+  position: relative;
+  padding: 12px 8px 12px 40px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+ margin-bottom: 3px;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+/*ul li.checked {*/
+/*  background: #888;*/
+/*  color: #fff;*/
+/*  text-decoration: line-through;*/
+/*}*/
+
+/* Add a "checked" mark when clicked on */
+/*ul li.checked::before {*/
+/*  content: '';*/
+/*  position: absolute;*/
+/*  border-color: #fff;*/
+/*  border-style: solid;*/
+/*  border-width: 0 2px 2px 0;*/
+/*  top: 10px;*/
+/*  left: 16px;*/
+/*  transform: rotate(45deg);*/
+/*  height: 15px;*/
+/*  width: 7px;*/
+/*}*/
+
+/* Style the close button */
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 12px 16px 12px 16px;
+  border: 0px solid #f44336;
+  font-size: 1em;
+}
+
+.close:hover {
+  background-color: #f44336;
+  color: white;
+}
+
+/* Style the input */
+#myInput {
+  margin: 0;
+  border: none;
+  border: 2px solid black;
+  color: black;
+  width: 73%;
+  padding: 10px;
+  float: left;
+  font-size: 1.7em;
+}
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 10px;
+  width: 22.5%;
+  background: dimgray;
+  color: white;
+  float: right;
+  text-align: center;
+  font-size: 1.7em;
+  cursor: pointer;
+  transition: 0.3s;
+  border-radius: 0;
+  border: 2px solid black;    
+}
+
+.addBtn:hover {
+  background-color: #bbb;
+  color: dimgray;
+}
